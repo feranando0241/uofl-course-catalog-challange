@@ -19,17 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Set up Python for the CSV → JSON converter
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      # 3. Convert the CSV to JSON (pre-build step)
-      - name: Convert CSV to JSON
-        run: python scripts/convert_csv_to_json.py
-
-      # 4. Set up Node.js
+      # 2. Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
