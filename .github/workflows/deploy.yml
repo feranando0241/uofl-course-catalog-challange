@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Grant GITHUB_TOKEN permissions to push to gh-pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout source
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Python for the CSV → JSON converter
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. Convert the CSV to JSON (pre-build step)
+      - name: Convert CSV to JSON
+        run: python scripts/convert_csv_to_json.py
+
+      # 4. Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 5. Install JS dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # 6. Run JS unit tests
+      - name: Run tests
+        run: npm run test -- --run
+
+      # 7. Build the production bundle
+      - name: Build
+        run: npm run build
+
+      # 8. Deploy dist/ to gh-pages branch
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          commit_message: 'deploy: ${{ github.sha }}'

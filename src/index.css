@@ -1,0 +1,743 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+/* ============================================================
+   UofL Course Catalog – Design System
+   University of Louisville Official Brand Colors
+   ============================================================ */
+
+@theme {
+  /* --- UofL Brand Palette --- */
+  --color-uofl-red: #AD0000;
+  --color-uofl-red-dark: #8B0000;
+  --color-uofl-red-light: #C41230;
+  --color-uofl-black: #1A1A1A;
+  --color-uofl-charcoal: #2D2D2D;
+  --color-uofl-gray: #6B7280;
+  --color-uofl-silver: #E5E7EB;
+  --color-uofl-bg: #F8FAFC;
+  --color-uofl-white: #FFFFFF;
+  --color-uofl-accent: #D4A017;     /* UofL Gold accent */
+  --color-uofl-accent-dark: #B8860B;
+
+  /* --- Typography --- */
+  --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Outfit', 'Inter', sans-serif;
+
+  /* --- Spacing & Radii --- */
+  --radius-card: 0.75rem;
+  --radius-pill: 9999px;
+
+  /* --- Shadows --- */
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-card-hover: 0 10px 25px -5px rgb(173 0 0 / 0.15), 0 4px 6px -2px rgb(173 0 0 / 0.08);
+  --shadow-header: 0 4px 20px -2px rgb(0 0 0 / 0.3);
+}
+
+
+/* ============================================================
+   Base / Reset
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-uofl-bg);
+  color: var(--color-uofl-black);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   Scrollbar Styling
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-uofl-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-uofl-red);
+  border-radius: var(--radius-pill);
+}
+
+/* ============================================================
+   Global Animations
+   ============================================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(173,0,0,0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(173,0,0,0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   Component Classes
+   ============================================================ */
+
+/* --- Header --- */
+.app-header {
+  background: linear-gradient(135deg, var(--color-uofl-black) 0%, var(--color-uofl-charcoal) 50%, #3D0000 100%);
+  box-shadow: var(--shadow-header);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.header-logo {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.header-logo:hover { transform: scale(1.08) rotate(-2deg); filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)); }
+
+.header-text {
+  flex: 1;
+}
+
+.header-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-weight: 800;
+  color: var(--color-uofl-white);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.header-title span {
+  color: var(--color-uofl-red-light);
+}
+
+.header-subtitle {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.55);
+  font-weight: 400;
+  margin-top: 0.15rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.header-badge {
+  background: rgba(173,0,0,0.25);
+  border: 1px solid rgba(173,0,0,0.4);
+  color: #FF9999;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .header-badge { display: inline-block; }
+}
+
+/* --- Controls Bar --- */
+.controls-bar {
+  background: var(--color-uofl-white);
+  border-bottom: 1px solid var(--color-uofl-silver);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position: sticky;
+  top: 84px;
+  z-index: 90;
+  animation: fadeIn 0.4s ease-out 0.1s both;
+}
+
+.controls-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.875rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .controls-inner {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+
+/* --- Search Bar --- */
+.search-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-uofl-gray);
+  pointer-events: none;
+  width: 18px;
+  height: 18px;
+  transition: color 0.2s;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.625rem 2.75rem 0.625rem 2.5rem;
+  border: 1.5px solid var(--color-uofl-silver);
+  border-radius: var(--radius-card);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--color-uofl-black);
+  background: var(--color-uofl-white);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--color-uofl-red);
+  box-shadow: 0 0 0 3px rgba(173,0,0,0.12);
+}
+
+.search-input::placeholder {
+  color: var(--color-uofl-gray);
+  opacity: 0.7;
+}
+
+.search-clear {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-uofl-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  transition: color 0.2s, background 0.2s;
+  padding: 0;
+}
+
+.search-clear:hover {
+  color: var(--color-uofl-red);
+  background: rgba(173,0,0,0.08);
+}
+
+/* --- Subject Filter --- */
+.filter-select {
+  padding: 0.625rem 2rem 0.625rem 0.875rem;
+  border: 1.5px solid var(--color-uofl-silver);
+  border-radius: var(--radius-card);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--color-uofl-black);
+  background: var(--color-uofl-white);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.625rem center;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 155px;
+}
+
+.filter-select:focus {
+  border-color: var(--color-uofl-red);
+  box-shadow: 0 0 0 3px rgba(173,0,0,0.12);
+}
+
+/* --- Results Info --- */
+.results-bar {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.results-count {
+  font-size: 0.85rem;
+  color: var(--color-uofl-gray);
+  font-weight: 500;
+}
+
+.results-count strong {
+  color: var(--color-uofl-red);
+  font-weight: 700;
+}
+
+/* --- Course Grid --- */
+.course-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .course-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .course-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1280px) {
+  .course-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* --- Course Card --- */
+.course-card {
+  background: var(--color-uofl-white);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-uofl-silver);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  animation: fadeInUp 0.4s ease-out both;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.course-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--color-uofl-red), var(--color-uofl-red-dark));
+  border-radius: 4px 0 0 4px;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.25s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(173,0,0,0.2);
+}
+
+.course-card:hover::before {
+  transform: scaleY(1);
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.card-subject-badge {
+  background: linear-gradient(135deg, var(--color-uofl-red), var(--color-uofl-red-dark));
+  color: var(--color-uofl-white);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.card-catalog-nbr {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-uofl-black);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.card-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-uofl-charcoal);
+  line-height: 1.4;
+}
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--color-uofl-silver);
+}
+
+.card-tag {
+  font-size: 0.7rem;
+  color: var(--color-uofl-gray);
+  background: var(--color-uofl-bg);
+  border: 1px solid var(--color-uofl-silver);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+}
+
+/* Card animation stagger */
+.course-card:nth-child(1)  { animation-delay: 0.04s; }
+.course-card:nth-child(2)  { animation-delay: 0.08s; }
+.course-card:nth-child(3)  { animation-delay: 0.12s; }
+.course-card:nth-child(4)  { animation-delay: 0.16s; }
+.course-card:nth-child(5)  { animation-delay: 0.20s; }
+.course-card:nth-child(6)  { animation-delay: 0.24s; }
+.course-card:nth-child(7)  { animation-delay: 0.28s; }
+.course-card:nth-child(8)  { animation-delay: 0.32s; }
+.course-card:nth-child(9)  { animation-delay: 0.36s; }
+.course-card:nth-child(10) { animation-delay: 0.40s; }
+.course-card:nth-child(11) { animation-delay: 0.44s; }
+.course-card:nth-child(12) { animation-delay: 0.48s; }
+
+/* --- Empty State --- */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-uofl-charcoal);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state-desc {
+  font-size: 0.95rem;
+  color: var(--color-uofl-gray);
+  margin-bottom: 1.5rem;
+}
+
+.btn-reset {
+  background: linear-gradient(135deg, var(--color-uofl-red), var(--color-uofl-red-dark));
+  color: var(--color-uofl-white);
+  border: none;
+  padding: 0.625rem 1.5rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  box-shadow: 0 4px 14px rgba(173,0,0,0.3);
+}
+
+.btn-reset:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(173,0,0,0.4);
+}
+
+.btn-reset:active {
+  transform: translateY(0);
+}
+
+/* --- Pagination --- */
+.pagination-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.page-btn {
+  min-width: 38px;
+  height: 38px;
+  padding: 0 0.5rem;
+  border: 1.5px solid var(--color-uofl-silver);
+  border-radius: 0.5rem;
+  background: var(--color-uofl-white);
+  color: var(--color-uofl-charcoal);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.page-btn:hover:not(:disabled):not(.page-btn--active) {
+  background: rgba(173,0,0,0.06);
+  border-color: rgba(173,0,0,0.3);
+  color: var(--color-uofl-red);
+}
+
+.page-btn--active {
+  background: linear-gradient(135deg, var(--color-uofl-red), var(--color-uofl-red-dark));
+  border-color: var(--color-uofl-red);
+  color: var(--color-uofl-white);
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(173,0,0,0.35);
+  animation: pulse-red 2s ease-in-out infinite;
+}
+
+.page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.page-ellipsis {
+  color: var(--color-uofl-gray);
+  font-size: 0.875rem;
+  padding: 0 0.25rem;
+  display: flex;
+  align-items: center;
+}
+
+/* --- Loading Spinner --- */
+.loading-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(173,0,0,0.15);
+  border-top-color: var(--color-uofl-red);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-text {
+  font-size: 0.9rem;
+  color: var(--color-uofl-gray);
+  font-weight: 500;
+}
+
+/* --- Error State --- */
+.error-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.error-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-uofl-red);
+  margin-bottom: 0.5rem;
+}
+
+.error-desc {
+  color: var(--color-uofl-gray);
+  font-size: 0.95rem;
+}
+
+/* --- Footer --- */
+.app-footer {
+  background: var(--color-uofl-black);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.8rem;
+  margin-top: auto;
+}
+
+.app-footer a {
+  color: rgba(173,0,0,0.8);
+  text-decoration: none;
+}
+.app-footer a:hover { color: var(--color-uofl-red-light); }
+
+/* ============================================================
+   Highlight matched text in search results
+   ============================================================ */
+mark {
+  background: rgba(173,0,0,0.12);
+  color: var(--color-uofl-red-dark);
+  border-radius: 2px;
+  padding: 0 2px;
+  font-weight: 600;
+}
+
+/* ============================================================
+   Course Modal
+   ============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: var(--color-uofl-white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-uofl-silver);
+  position: sticky;
+  top: 0;
+  background: var(--color-uofl-white);
+  z-index: 10;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--color-uofl-gray);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.modal-close:hover {
+  background-color: var(--color-uofl-silver);
+  color: var(--color-uofl-black);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-uofl-black);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.modal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-description {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-uofl-silver);
+}
+
+.modal-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-uofl-red);
+  margin-bottom: 1rem;
+}
+
+.modal-description p {
+  color: var(--color-uofl-dark-gray);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
