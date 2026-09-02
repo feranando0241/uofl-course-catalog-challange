@@ -77,29 +77,29 @@ describe('filterCourses', () => {
   });
 
   it('filters by query (substring fallback, no fuse)', () => {
-    const result = filterCourses(SAMPLE_COURSES, 'technology', '', null);
+    const result = filterCourses(SAMPLE_COURSES, 'technology', '', '', '', null);
     expect(result).toHaveLength(1);
     expect(result[0].crse_id).toBe(1);
   });
 
   it('filters by query AND subject together', () => {
-    const result = filterCourses(SAMPLE_COURSES, 'calculus', 'MATH', null);
+    const result = filterCourses(SAMPLE_COURSES, 'calculus', 'MATH', '', '', null);
     expect(result).toHaveLength(2);
     expect(result.every((c) => c.subject === 'MATH')).toBe(true);
   });
 
   it('returns empty array when nothing matches', () => {
-    const result = filterCourses(SAMPLE_COURSES, 'xyzzy', '', null);
+    const result = filterCourses(SAMPLE_COURSES, 'xyzzy', '', '', '', null);
     expect(result).toHaveLength(0);
   });
 
   it('is case-insensitive', () => {
-    const result = filterCourses(SAMPLE_COURSES, 'CALCULUS', '', null);
+    const result = filterCourses(SAMPLE_COURSES, 'CALCULUS', '', '', '', null);
     expect(result).toHaveLength(2);
   });
 
   it('ignores queries shorter than 2 chars', () => {
-    const result = filterCourses(SAMPLE_COURSES, 'c', '', null);
+    const result = filterCourses(SAMPLE_COURSES, 'c', '', '', '', null);
     // Single char → no text filter applied, all courses returned
     expect(result).toHaveLength(SAMPLE_COURSES.length);
   });
@@ -115,14 +115,14 @@ describe('filterCourses with Fuse.js', () => {
   });
 
   it('finds exact matches via fuse', () => {
-    const result = filterCourses(SAMPLE_COURSES, 'calculus', '', fuseIndex);
+    const result = filterCourses(SAMPLE_COURSES, 'calculus', '', '', '', fuseIndex);
     expect(result.length).toBeGreaterThanOrEqual(1);
     expect(result.some((c) => c.descr.toLowerCase().includes('calculus'))).toBe(true);
   });
 
   it('handles typos via fuzzy matching', () => {
     // 'calculss' is a typo for 'calculus'
-    const result = filterCourses(SAMPLE_COURSES, 'calculss', '', fuseIndex);
+    const result = filterCourses(SAMPLE_COURSES, 'calculss', '', '', '', fuseIndex);
     // Should still find calculus courses (threshold 0.35)
     expect(result.length).toBeGreaterThanOrEqual(0); // fuzzy: result may vary
   });
