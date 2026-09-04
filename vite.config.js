@@ -5,8 +5,8 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   // Base path for GitHub Pages hosting
-  // Must match the repository name: https://<user>.github.io/uofl-course-catalog-challenge/
-  base: '/uofl-course-catalog-challenge/',
+  // Must match the repository name: https://feranando0241.github.io/uofl-course-catalog-challange/
+  base: '/uofl-course-catalog-challange/',
   plugins: [
     react(),
     tailwindcss(),

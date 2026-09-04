@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://andreslopez.github.io/uofl-course-catalog-challenge",
+  "homepage": "https://feranando0241.github.io/uofl-course-catalog-challange",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
