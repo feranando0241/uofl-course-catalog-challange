@@ -2,9 +2,9 @@
 
 > A modern, interactive course catalog for the **University of Louisville** — built as a submission for the UofL Integrative Design and Development Programmer Coding Challenge.
 
-[![Deploy to GitHub Pages](https://github.com/andreslopez/uofl-course-catalog-challenge/actions/workflows/deploy.yml/badge.svg)](https://github.com/andreslopez/uofl-course-catalog-challenge/actions/workflows/deploy.yml)
+[![Deploy to GitHub Pages](https://github.com/feranando0241/uofl-course-catalog-challange/actions/workflows/deploy.yml/badge.svg)](https://github.com/feranando0241/uofl-course-catalog-challange/actions/workflows/deploy.yml)
 
-**🔗 Live Demo:** [andreslopez.github.io/uofl-course-catalog-challenge](https://andreslopez.github.io/uofl-course-catalog-challenge)
+**🔗 Live Demo:** [feranando0241.github.io/uofl-course-catalog-challange](https://feranando0241.github.io/uofl-course-catalog-challange)
 
 ---
 
@@ -54,7 +54,7 @@ This application ingests the provided `catalog dev.csv` dataset (~8,494 rows), c
 ## Project Structure
 
 ```text
-uofl-course-catalog-challenge/
+uofl-course-catalog-challange/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml          # CI/CD: build + deploy to GitHub Pages
@@ -100,8 +100,8 @@ uofl-course-catalog-challenge/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/andreslopez/uofl-course-catalog-challenge.git
-cd uofl-course-catalog-challenge
+git clone https://github.com/feranando0241/uofl-course-catalog-challange.git
+cd uofl-course-catalog-challange
 ```
 
 ### 2. Install JavaScript dependencies
@@ -132,7 +132,7 @@ This writes `public/data/courses.json` (~2,775 unique courses).
 npm run dev
 ```
 
-Open [http://localhost:5173/uofl-course-catalog-challenge/](http://localhost:5173/uofl-course-catalog-challenge/)
+Open [http://localhost:5173/uofl-course-catalog-challange/](http://localhost:5173/uofl-course-catalog-challange/)
 
 ---
 
